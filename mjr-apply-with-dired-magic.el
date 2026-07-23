@@ -19,7 +19,7 @@
 ;; TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ;; Author:      Mitch Richling
-;; Version:     0.1
+;; Version:     0.2
 ;; Keywords:    mjr-apply-with-dired-magic
 ;; URL:         https://github.com/richmit/mjr-apply-with-dired-magic
 
@@ -39,8 +39,11 @@
 ;;;###autoload
 (defun mjr-apply-with-dired-magic (func &rest func-args)
   "In a non-dired buffer, execute FUNC.  In dired, do find-file-noselect on each marked file and execute FUNC in each buffer.
-Note that find-file will reuse an existing buffer already visiting a file instead of loading it again.  
+Note that find-file will reuse an existing buffer already visiting a file instead of loading it again.
 Also note that find-file verifies that the file has not changed since visited or saved."
+  (interactive "xNo argument lambda or function name: ")
+  (unless (functionp func)
+    (error "mjr-apply-with-dired-magic: ERROR: func argument was not a function!"))
   (if (not (equal major-mode 'dired-mode))
       (apply func func-args)
       (let ((marked-files (dired-get-marked-files)))
@@ -56,3 +59,6 @@ Also note that find-file verifies that the file has not changed since visited or
 (provide 'mjr-apply-with-dired-magic)
 
 ;;; filename ends here
+
+
+
