@@ -1,4 +1,5 @@
-# mjr-apply-with-dired-magic
+mjr-apply-with-dired-magic
+==========================
 
 This Emacs package provides a single fuction:
 
